@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-import os
 
 st.set_page_config(page_title="Attrition Dashboard", layout="wide")
 
@@ -49,21 +48,11 @@ salary_max = int(np.nanmax(df_model['MonthlyIncome']))
 
 # Load model
 try:
-    st.write("Isi root:", os.listdir())
-
-    if os.path.exists("model"):
-        st.write("Isi folder model:", os.listdir("model"))
-    else:
-        st.write("Folder model tidak ditemukan")
-
     model = pickle.load(open('model/model.pkl', 'rb'))
     features = pickle.load(open('model/features.pkl', 'rb'))
-
-    st.success("Model berhasil di-load")
     model_loaded = True
-
-except Exception as e:
-    st.error(f"Gagal load model: {e}")
+except:
+    st.warning("Model belum tersedia / gagal load")
     model_loaded = False
 
 
